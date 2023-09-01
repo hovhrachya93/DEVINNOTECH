@@ -1,0 +1,18 @@
+.errorDisplay {
+  display: flex;
+  flex-direction: column;
+}
+
+.errorDisplay__section {
+  margin-bottom: 16px;
+}
+
+.errorDisplay__label {
+  font-size: xx-large;
+  font-weight: 700;
+}
+.errorDisplay__content {
+  font-size: x-large;
+  color: red;
+  margin: 0;
+}

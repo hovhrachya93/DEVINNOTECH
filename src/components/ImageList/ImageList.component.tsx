@@ -1,34 +1,37 @@
 import { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import Spinner from '@/common/Spinner';
 import ImageView from '@/common/ImageView';
 import ErrorDisplay from '@/common/ErrorDisplay';
-import { useGetImagesByCategoryQuery } from '@/api/cat.api';
-import { Image } from './ImageList.type';
+import { useAppDispatch } from '@/hooks/useAppDispatch';
+import { Image, ImageListProps } from './ImageList.type';
+import { RootState } from '@/redux/reducers/rootReducer';
+import { fetchImages } from '@/redux/actions/images.actions';
+import { ImagesState } from '@/redux/reducers/images.reducer';
 import './ImageList.style.scss';
-
-type ImageListProps = {
-  categoryId: string | null;
-};
 
 const ImageList: React.FC<ImageListProps> = ({ categoryId }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [allImages, setAllImages] = useState<Image[]>([]);
-  const {
-    data: images,
-    isLoading,
-    isError,
-    error,
-  } = useGetImagesByCategoryQuery(
-    categoryId ? { page: currentPage, categoryId } : undefined,
-    { skip: !categoryId }
-  );
+
+  const { images, loading, error } = useSelector(
+    (state: RootState) => state.images
+  ) as ImagesState;
+
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     if (categoryId) {
       setAllImages([]);
-      setCurrentPage(1);
     }
   }, [categoryId]);
+
+  useEffect(() => {
+    if (categoryId) {
+      dispatch(fetchImages(currentPage, categoryId));
+      setCurrentPage(1);
+    }
+  }, [currentPage, categoryId, dispatch]);
 
   useEffect(() => {
     if (images) {
@@ -41,13 +44,13 @@ const ImageList: React.FC<ImageListProps> = ({ categoryId }) => {
   };
 
   const renderContent = () => {
-    if (isLoading) {
+    if (loading) {
       return (
         <div className="imageList__spinner">
           <Spinner />
         </div>
       );
-    } else if (isError && error) {
+    } else if (error) {
       return (
         <div className="imageList__error">
           <ErrorDisplay error={error} />

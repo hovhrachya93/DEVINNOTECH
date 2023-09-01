@@ -3,8 +3,8 @@ import { lazy, Suspense } from 'react';
 import { Routes, Route } from 'react-router-dom';
 
 const Home = lazy(() => import('@/components/Home'));
-const CategoryAndImage = lazy(() => import('@/components/CategoryAndImage'));
 const Spinner = lazy(() => import('@/common/Spinner'));
+const CategoryAndImage = lazy(() => import('@/components/CategoryAndImage'));
 
 const CatsRoutes = () => {
   return (

@@ -1,17 +1,11 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import axios from 'axios';
 
-export const apiService = createApi({
-  baseQuery: fetchBaseQuery({ baseUrl: 'https://api.thecatapi.com/v1' }),
-  endpoints: (builder) => ({
-    getAllCategories: builder.query({
-      query: () => 'categories',
-    }),
-    getImagesByCategory: builder.query({
-      query: ({ page, categoryId }) =>
-        `images/search?limit=100&page=${page}&category_ids=${categoryId}`,
-    }),
-  }),
-});
+export const getAllCategories = () => {
+  return axios.get('https://api.thecatapi.com/v1/categories');
+};
 
-export const { useGetAllCategoriesQuery, useGetImagesByCategoryQuery } =
-  apiService;
+export const getImagesByCategory = (page: number, categoryId: string) => {
+  return axios.get(
+    `https://api.thecatapi.com/v1/images/search?limit=100&page=${page}&category_ids=${categoryId}`
+  );
+};

@@ -1,5 +1,5 @@
 import { Provider } from 'react-redux';
-import store from '@/redux/configureStore';
+import store from '@/redux/store';
 import CatsRoutes from '@/router/Cats.router';
 import { BrowserRouter as Router } from 'react-router-dom';
 

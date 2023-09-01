@@ -4,6 +4,7 @@
     "paths": {
       "@/api/*": ["api/*"],
       "@/redux/*": ["redux/*"],
+      "@/hooks/*": ["hooks/*"],
       "@/store/*": ["store/*"],
       "@/common/*": ["common/*"],
       "@/router/*": ["router/*"],
